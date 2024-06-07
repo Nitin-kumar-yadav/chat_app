@@ -1,20 +1,25 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setOtherUsers } from '../redux/userSlice';
 import axios from 'axios';
+import { BASE_URL } from '..';
 
 const useGetOtherUser = () => {
-
+    const dispatch = useDispatch();
     useEffect(() => {
         const fetchOtherUsers = async () => {
             try {
                 axios.defaults.withCredentials = true;
-                const res = await axios.get('https://chat-app-api-umber.vercel.app/api/v1/users')
-                console.log(res);
+                const res = await axios.get(`${BASE_URL}/api/v1/user`);
+                // store
+                console.log("other users -> ", res);
+                dispatch(setOtherUsers(res.data));
             } catch (error) {
                 console.log(error);
             }
-        }
-        fetchOtherUsers()
-    }, [])
-}
+        };
+        fetchOtherUsers();
+    }, []);
+};
 
-export default useGetOtherUser
+export default useGetOtherUser;

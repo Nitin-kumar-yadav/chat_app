@@ -7,8 +7,10 @@ import { setAuthUser } from '../redux/userSlice'
 
 const Login = () => {
 
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [user, setUser] = useState({
+        username: "",
+        password: ""
+    })
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -18,17 +20,8 @@ const Login = () => {
 
         try {
 
-            if (!password || !username) {
-                toast.error("Please fill all fields")
-                setPassword("")
-                setUsername("")
-                return
-            }
-            const response = await axios.post('https://chat-app-api-umber.vercel.app/api/v1/users/login',
-                {
-                    username,
-                    password
-                },
+
+            const response = await axios.post('http://localhost:5000/api/v1/users/login', user,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -41,9 +34,8 @@ const Login = () => {
             if (!response) {
                 toast.error("Failed to login")
             }
-            dispatch(setAuthUser(response.data))
             toast.success(`Welcome, ${response.data.fullName}`)
-            localStorage.getItem('user-token', response)
+            dispatch(setAuthUser(response.data))
             console.log(response)
             navigate("/")
         } catch (error) {
@@ -51,8 +43,10 @@ const Login = () => {
             console.log(error)
         }
 
-        setPassword("")
-        setUsername("")
+        setUser({
+            username: "",
+            password: ""
+        })
 
     }
 
@@ -62,16 +56,16 @@ const Login = () => {
                 <h1 className="text-3xl font-bold text-center text-gray-200">Login</h1>
                 <form onSubmit={handleLogin} >
                     <div className='p-3' >
-                        <input value={username} onChange={(e) => setUsername(e.target.value)} className='w-full input input-bordered h-10 text-white' type="text" placeholder='username' />
+                        <input value={user.username} onChange={(e) => setUser({ ...user, username: e.target.value })} className='w-full input input-bordered h-10 text-white' type="text" placeholder='username' />
                     </div>
                     <div className='p-3' >
-                        <input value={password} onChange={(e) => setPassword(e.target.value)} className='w-full input input-bordered h-10 text-white' type="password" placeholder='password' />
+                        <input value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })} className='w-full input input-bordered h-10 text-white' type="password" placeholder='password' />
                     </div>
                     <div className='flex m-auto justify-center my-5 w-full h-10 text-white align-middle' >
                         <button type='submit' className='transition ease-in-out delay-150 bg-green-500 hover:-translate-y-1 hover:scale-20 hover:bg-green-800 duration-300 w-1/2 rounded-lg' >Login</button>
                     </div>
                     <div className='text-green-500 transition ease-in-out delay-200 hover:text-white' >
-                        <Link to={"/signup"} >Don't have an account?</Link>
+                        <Link to={"/Sign up"} >Don't have an account?</Link>
                     </div>
                 </form>
             </div>

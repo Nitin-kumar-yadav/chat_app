@@ -8,9 +8,6 @@ import cors from "cors";
 
 configDotenv();
 const app = express();
-app.use(cors({
-    origin: ['http://localhost:3000', 'https://chat-app-api-umber.vercel.app']
-}));
 
 
 const PORT = process.env.PORT || 8000;
@@ -18,6 +15,11 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
+const corsOption = {
+    origin: 'http://localhost:3000',
+    credentials: true
+};
+app.use(cors(corsOption));
 
 
 // Routes
