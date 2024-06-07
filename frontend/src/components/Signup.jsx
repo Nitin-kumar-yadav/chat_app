@@ -24,9 +24,14 @@ const Signup = () => {
 
         try {
             const response = await axios.post('https://chat-app-api-umber.vercel.app/api/v1/users/signup', user, {
+
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Credentials': true,
+                    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
                 }
+
             })
 
             if (!response) {
