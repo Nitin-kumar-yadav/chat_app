@@ -7,7 +7,7 @@ const useGetOtherUser = () => {
         const fetchOtherUsers = async () => {
             try {
                 axios.defaults.withCredentials = true;
-                const res = await axios.get('http://localhost:5000/api/v1/users')
+                const res = await axios.get('https://chat-app-api-umber.vercel.app/api/v1/users')
                 console.log(res);
             } catch (error) {
                 console.log(error);

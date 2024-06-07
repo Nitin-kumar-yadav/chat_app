@@ -24,7 +24,7 @@ const Login = () => {
                 setUsername("")
                 return
             }
-            const response = await axios.post('http://localhost:5000/api/v1/users/login',
+            const response = await axios.post('https://chat-app-api-umber.vercel.app/api/v1/users/login',
                 {
                     username,
                     password
